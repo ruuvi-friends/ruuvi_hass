@@ -14,3 +14,19 @@ sensor:
     mac: 'MA:CA:DD:RE:SS:01'
     name: 'bathroom'
 ```
+
+If you need you can pass the ble adapter as well.
+Run `hciconfig` to see which ones are available on your machine / env
+Defaults to ruuvi ble_communicator default (at this point is `hci0`)
+
+```
+  - platform: ruuvi-hass
+    mac: 'MA:CA:DD:RE:SS:01'
+    name: 'balcony'
+    adapted: 'hci0' 
+```
+
+
+## Contributors 
+[JonasR-](https://github.com/JonasR-) (author)
+[smaisidoro](https://github.com/sergioisidoro)
