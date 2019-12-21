@@ -23,7 +23,7 @@ Defaults to ruuvi ble_communicator default (at this point is `hci0`)
   - platform: ruuvi-hass
     mac: 'MA:CA:DD:RE:SS:01'
     name: 'balcony'
-    adapted: 'hci0' 
+    adapter: 'hci0' 
 ```
 
 
