@@ -11,8 +11,6 @@ from homeassistant.const import (
     CONF_FORCE_UPDATE, CONF_MONITORED_CONDITIONS, CONF_NAME, CONF_MAC
 )
 
-REQUIREMENTS = ['ruuvitag_sensor']
-
 _LOGGER = logging.getLogger(__name__)
 
 CONF_ADAPTER = 'adapter'

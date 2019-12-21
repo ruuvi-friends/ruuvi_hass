@@ -1,7 +1,7 @@
 # ruuvi_hass
 RuuviTag sensor for hass.io
 
-Copy ruuvi-hass.py to <config folder>/custom_components/sensor/ (e.g. /home/homeassistant/.homeassistant/custom_components/sensor/ruuvi-hass.py)
+Copy the contents of `custom_components` in this repo to `<config folder>/custom_components` (e.g. `/home/homeassistant/.homeassistant/custom_components/`).
 
 The configuration.yaml has to be edited like this
 ```
