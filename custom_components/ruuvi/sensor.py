@@ -17,7 +17,9 @@ CONF_ADAPTER = 'adapter'
 CONF_TIMEOUT = 'timeout'
 CONF_POLL_INTERVAL = 'poll_interval'
 
-DEFAULT_ADAPTER = 'hci0'
+# In Ruuvi ble this defaults to hci0, so let's ruuvi decide on defaults
+# https://github.com/ttu/ruuvitag-sensor/blob/master/ruuvitag_sensor/ble_communication.py#L51
+DEFAULT_ADAPTER = '' 
 DEFAULT_FORCE_UPDATE = False
 DEFAULT_NAME = 'RuuviTag'
 DEFAULT_TIMEOUT = 3
@@ -48,7 +50,13 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
     if not isinstance(mac_addresses, list):
         mac_addresses = [mac_addresses]
 
-    probe = RuuviProbe(RuuviTagSensor, mac_addresses, config.get(CONF_TIMEOUT), config.get(CONF_POLL_INTERVAL))
+    probe = RuuviProbe(
+            RuuviTagSensor, 
+            mac_addresses, 
+            config.get(CONF_TIMEOUT), 
+            config.get(CONF_POLL_INTERVAL), 
+            config.get(CONF_ADAPTER)
+        )
 
     devs = []
     for mac_address in mac_addresses:
@@ -63,12 +71,13 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
 
 
 class RuuviProbe(object):
-    def __init__(self, RuuviTagSensor, mac_addresses, timeout, max_poll_interval):
+    def __init__(self, RuuviTagSensor, mac_addresses, timeout, max_poll_interval, adapter):
         self.RuuviTagSensor = RuuviTagSensor
         self.mac_addresses = mac_addresses
         self.timeout = timeout
         self.max_poll_interval = max_poll_interval
         self.last_poll = datetime.datetime.now()
+        self.adapter = adapter
 
         default_condition = {'humidity': None, 'identifier': None, 'pressure': None, 'temperature': None}
         self.conditions = {mac: default_condition for mac in mac_addresses}
@@ -77,7 +86,7 @@ class RuuviProbe(object):
         if (datetime.datetime.now() - self.last_poll).total_seconds() < self.max_poll_interval:
             return
         try:
-            self.conditions = self.RuuviTagSensor.get_data_for_sensors(self.mac_addresses, self.timeout)
+            self.conditions = self.RuuviTagSensor.get_data_for_sensors(self.mac_addresses, self.timeout, self.adapter)
         except:
             _LOGGER.exception("Error on polling sensors")
         self.last_poll = datetime.datetime.now()
@@ -108,6 +117,3 @@ class RuuviSensor(Entity):
         self.poller.poll()
 
         self._state = self.poller.conditions.get(self.mac_address, {}).get(self.sensor_type)
-
-
-
