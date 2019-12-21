@@ -4,6 +4,6 @@
     "name": "Ruuvi tag Sensor",
     "documentation": "https://github.com/JonasR-/ruuvi_hass",
     "dependencies": [],
-    "codeowners": [],
+    "codeowners": ["@JonasR", "@salleq", "@PieterGit", "@smaisidoro"],
     "requirements": ["ruuvitag_sensor"]
   }

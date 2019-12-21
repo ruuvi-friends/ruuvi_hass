@@ -29,4 +29,6 @@ Defaults to ruuvi ble_communicator default (at this point is `hci0`)
 
 ## Contributors 
 [JonasR-](https://github.com/JonasR-) (author)
+[PieterGit](https://github.com/PieterGit)
+[salleq](https://github.com/salleq)
 [smaisidoro](https://github.com/sergioisidoro)
